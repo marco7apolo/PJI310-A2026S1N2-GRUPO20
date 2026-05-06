@@ -76,28 +76,32 @@ WSGI_APPLICATION = 'sgo.wsgi.application'
 # Banco de dados
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Recomendado no Linux/Ubuntu: definir credenciais por variáveis de ambiente.
+# Configuração via variáveis de ambiente (suporte a PostgreSQL/Supabase e MySQL)
+# Variáveis necessárias para PostgreSQL/Supabase:
+#   DB_ENGINE=django.db.backends.postgresql
+#   DB_NAME=nome_do_banco (geralmente "postgres" no Supabase)
+#   DB_USER=usuario (formato: postgres.[project-ref] no Supabase)
+#   DB_PASSWORD=senha_forte
+#   DB_HOST=host (ex: aws-0-us-east-1.pooler.supabase.com)
+#   DB_PORT=6543 (porta do Transaction Pooler do Supabase)
+# Para MySQL local (desenvolvimento legado):
+#   DB_ENGINE=django.db.backends.mysql
+#   DB_NAME=bd_sgo
+#   DB_USER=pi_1_26_user
+#   DB_PASSWORD=Pi@1_2026
+#   DB_HOST=127.0.0.1
+#   DB_PORT=3306
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bd_sgo',
-        'USER': 'pi_1_26_user',
-        'PASSWORD': 'Pi@1_2026',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.environ.get('DB_NAME', 'postgres'),
+        'USER': os.environ.get('DB_USER', ''),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', ''),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
-
-# Para SQLite (desenvolvimento sem MySQL):
-#   export DJANGO_SETTINGS_MODULE=sgo.settings_sqlite
-# Ou comente o bloco acima e descomente o SQLite abaixo.
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 # Validação de senha
