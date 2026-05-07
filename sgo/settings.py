@@ -36,12 +36,10 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('1', 'true', 'yes')
 
 # ALLOWED_HOSTS: aceita domínios do Vercel (.vercel.app) além dos configurados
 _allowed_env = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
-_allowed = [h.strip() for h in _allowed_env.split(',') if h.strip()]
-# Adiciona padrão do Vercel se não estiver presente
-_vercel_pattern = '.vercel.app'
-if not any(_vercel_pattern in h for h in _allowed):
-    _allowed.append(_vercel_pattern)
-ALLOWED_HOSTS = _allowed
+ALLOWED_HOSTS = [h.strip() for h in _allowed_env.split(',') if h.strip()]
+# Adiciona padrão do Vercel (wildcard) se não estiver presente
+if not any('vercel.app' in h for h in ALLOWED_HOSTS):
+    ALLOWED_HOSTS.append('.vercel.app')
 
 
 # Aplicações instaladas e middleware
