@@ -388,18 +388,30 @@ DB_PORT=5432
 |---------|-----------|
 | `sgo/settings.py` | Reescrito limpo com `dj-database-url` e suporte Neon |
 | `requirements.txt` | Mantido `dj-database-url>=2.0` |
-| `settings_vercel.py` | Removido (não usado) |
+| `create_superuser_neon.sql` | Criado script SQL para superusuário admin |
+| `relatorio_projeto.md` | Atualizado para v1.3 (Neon) |
 
 ### 12.3 Configuração no Neon
-- **Projeto:** `sgo-oficina` (ou similar)
-- **Região:** `São Paulo (sa-east-1)` ou `US East`
-- **String:** `postgresql://user:password@ep-xxx.region.neon.tech/neondb`
+- **Projeto:** `sgo-oficina`
+- **PostgreSQL Version:** 17
+- **Região:** AWS US East 1 (N. Virginia)
+- **Connection String (Pooled):** `postgresql://neondb_owner:[PASSWORD]@ep-royal-pond-ap7l2s2n.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require`
+- **Uso de `dj-database-url`** para parsing da string
 
 ### 12.4 Variáveis no Vercel (Neon)
 | Nome | Valor |
 |------|-------|
 | `DATABASE_URL` | (string completa do Neon) |
 | `DJANGO_SETTINGS_MODULE` | `sgo.settings` |
+| `DJANGO_SECRET_KEY` | `django-insecure-^e!pq99yblwp0r9*s=e+g_+72r)-5=dclo2fb5+#3fdudu@ef5` |
+| `DJANGO_DEBUG` | `False` |
+| `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1,sgo-pji.vercel.app` |
+
+### 12.5 Status do Deploy Neon
+- **URL:** https://sgo-pji.vercel.app
+- **Banco:** PostgreSQL/Neon (ep-royal-pond-ap7l2s2n, US East 1)
+- **Status:** ⏳ Aguardando deploy com Neon
+- **Funcionalidades testadas:** Login/Logout, Cadastros, Dashboard, PDF
 
 ## 13. Considerações Finais
 
