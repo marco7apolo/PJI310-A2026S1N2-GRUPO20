@@ -119,7 +119,6 @@ DATABASES = {
         'PORT': _db_port,
     }
 }
-    }
 else:
     DATABASES = {
         'default': {
