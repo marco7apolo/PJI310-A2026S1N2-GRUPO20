@@ -8,7 +8,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER': 'postgres.evunltitxfjrreymbvbb',
+        'USER': 'postgres.evunltitxfjrreymbvbb',  # Usuário Pooler com ref
         'PASSWORD': 'cjNikpPtHCUpNneR',
         'HOST': 'aws-0-sa-east-1.pooler.supabase.com',
         'PORT': '6543',
