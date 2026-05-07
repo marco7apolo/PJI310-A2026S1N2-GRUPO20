@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Final SGO - PJI310 Univesp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .hero {
+            background: linear-gradient(135deg, #3d4f5f 0%, #2c3844 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .hero .lead {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .section {
+            margin-bottom: 3rem;
+        }
+        .section-title {
+            color: #3d4f5f;
+            border-bottom: 3px solid #3d4f5f;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-feature {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .card-feature:hover {
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            font-size: 2rem;
+            color: #3d4f5f;
+            margin-bottom: 1rem;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #3d4f5f;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #3d4f5f;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #3d4f5f;
+        }
+        .badge-success {
+            background: #28a745;
+        }
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        .commit-hash {
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            color: #6c757d;
+        }
+        .table-config {
+            font-size: 0.9rem;
+        }
+        .footer {
+            background: #3d4f5f;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        .btn-vercel {
+            background: #000;
+            color: white;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+        }
+        .btn-vercel:hover {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-screwdriver-wrench me-3"></i>SGO - Sistema de Gestão de Oficina</h1>
+                    <p class="lead mb-3">Relatório Final - Projeto Integrador PJI310 | Univesp 2026</p>
+                    <p class="mb-0">
+                        <span class="badge bg-success me-2">✓ 100% Operacional</span>
+                        <span class="badge bg-info">Deploy em Produção</span>
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="https://sgo-pji.vercel.app/" class="btn btn-vercel mt-3" target="_blank">
+                        <i class="fas fa-external-link-alt me-2"></i>Ver Aplicação
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Info Boxes -->
+        <div class="row mb-5">
+            <div class="col-md-3">
+                <div class="card card-feature text-center p-3">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h5>PostgreSQL</h5>
+                    <p class="text-muted small mb-0">Neon Cloud<br>v17</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-feature text-center p-3">
+                    <div class="feature-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h5>Django 5.2</h5>
+                    <p class="text-muted small mb-0">Python 3.14<br>Backend</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-feature text-center p-3">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h5>Vercel</h5>
+                    <p class="text-muted small mb-0">Deploy Serverless<br>Automático</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card card-feature text-center p-3">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h5>ReportLab</h5>
+                    <p class="text-muted small mb-0">Geração PDF<br>Laudos Técnicos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção 1: Visão Geral -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-info-circle me-2"></i>Visão Geral</h2>
+            <p>O <strong>SGO (Sistema de Gestão de Oficina)</strong> é uma aplicação web desenvolvida em Django para gerenciar oficinas de reparo de eletroeletrônicos. O sistema atende à demanda de pequenos empreendimentos do setor, muitos atuando na informalidade, oferecendo ferramentas para cadastro de clientes, equipamentos, técnicos e ordens de serviço (reparos), além de dashboards e geração de laudos técnicos em PDF.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h5>Contexto Social</h5>
+                    <ul>
+                        <li>Brasil é o 5º maior produtor de lixo eletrônico do mundo</li>
+                        <li>Apenas ~3% dos resíduos eletrônicos são reciclados</li>
+                        <li>37,5% da população ocupada no Brasil está na informalidade</li>
+                        <li>Metodologias centradas no usuário (Design Thinking)</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5>Informações do Projeto</h5>
+                    <table class="table table-sm">
+                        <tr>
+                            <td><strong>Projeto:</strong></td>
+                            <td>PJI310-A2026S1N2-GRUPO20</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Repositório:</strong></td>
+                            <td><a href="https://github.com/marco7apolo/PJI310-A2026S1N2-GRUPO20" target="_blank">GitHub</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Produção:</strong></td>
+                            <td><a href="https://sgo-pji.vercel.app/" target="_blank">sgo-pji.vercel.app</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Status:</strong></td>
+                            <td><span class="badge bg-success">Operacional</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 2: Jornada -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-road me-2"></i>Jornada de Desenvolvimento</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h5>Fase 1: Configuração Inicial e MySQL</h5>
+                    <p>Configuração inicial do projeto Django, desenvolvimento local com MySQL, implementação dos modelos e templates.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h5>Fase 2: Migração para PostgreSQL/Supabase</h5>
+                    <p><strong>Desafios:</strong></p>
+                    <ul>
+                        <li>Erro de conexão IPv6: <code>Cannot assign requested address</code></li>
+                        <li>Erro de Pooler: <code>Tenant or user not found</code></li>
+                    </ul>
+                    <p><strong>Resultado:</strong> Migração abandonada, migrou para Neon.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h5>Fase 3: Migração para Neon (Sucesso)</h5>
+                    <p>Configuração do Neon com Pooled connection para melhor performance serverless.</p>
+                    <div class="code-block">
+# String de conexão Neon
+postgresql://neondb_owner:npg_TInJ1Kwy0GaY@ep-royal-pond-ap7l2s2n-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <h5>Fase 4: Configuração Django para Produção</h5>
+                    <p>Implementação de <code>dj-database-url</code>, variáveis de ambiente, <code>DEBUG=False</code>.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h5>Fase 5: Deploy na Vercel</h5>
+                    <p>Configuração de variáveis de ambiente, correção de erros de autenticação, deploy bem-sucedido.</p>
+                    <p><span class="badge bg-success">✓ Deploy 100% operacional</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 3: Funcionalidades -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-star me-2"></i>Funcionalidades Implementadas</h2>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-users text-primary me-2"></i>Autenticação</h5>
+                            <ul class="small">
+                                <li>Login de usuários</li>
+                                <li>Logout</li>
+                                <li>Proteção de rotas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-edit text-success me-2"></i>Cadastros (CRUD)</h5>
+                            <ul class="small">
+                                <li>Clientes</li>
+                                <li>Técnicos</li>
+                                <li>Equipamentos</li>
+                                <li>Reparos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-chart-bar text-info me-2"></i>Dashboard</h5>
+                            <ul class="small">
+                                <li>Contadores</li>
+                                <li>Gráficos (Chart.js)</li>
+                                <li>Faturamento</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-file-pdf text-danger me-2"></i>Relatórios PDF</h5>
+                            <p class="small">Geração de laudo técnico em PDF utilizando ReportLab, download direto no navegador.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-mobile-alt text-warning me-2"></i>Interface</h5>
+                            <ul class="small">
+                                <li>Bootstrap 5 responsivo</li>
+                                <li>Navbar com navegação</li>
+                                <li>Mensagens de feedback</li>
+                                <li>Ícones Font Awesome</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 4: Configurações -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-cog me-2"></i>Configurações Técnicas</h2>
+            
+            <h5>Stack Tecnológica</h5>
+            <table class="table table-bordered table-config">
+                <thead class="table-light">
+                    <tr>
+                        <th>Camada</th>
+                        <th>Tecnologia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Backend</td>
+                        <td>Django 5.2, Python 3.14</td>
+                    </tr>
+                    <tr>
+                        <td>Banco</td>
+                        <td>PostgreSQL 17 (Neon)</td>
+                    </tr>
+                    <tr>
+                        <td>Frontend</td>
+                        <td>HTML5, CSS3, Bootstrap 5, JavaScript</td>
+                    </tr>
+                    <tr>
+                        <td>Gráficos</td>
+                        <td>Chart.js</td>
+                    </tr>
+                    <tr>
+                        <td>PDF</td>
+                        <td>ReportLab</td>
+                    </tr>
+                    <tr>
+                        <td>Deploy</td>
+                        <td>Vercel</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h5 class="mt-4">Variáveis de Ambiente (Vercel)</h5>
+            <table class="table table-bordered table-config">
+                <thead class="table-light">
+                    <tr>
+                        <th>Variável</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>DJANGO_SETTINGS_MODULE</code></td>
+                        <td><code>sgo.settings</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>DATABASE_URL</code></td>
+                        <td><code>postgresql://neondb_owner:***@ep-royal-pond-...</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>DJANGO_SECRET_KEY</code></td>
+                        <td><code>django-insecure-...</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>DJANGO_DEBUG</code></td>
+                        <td><code>False</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>DJANGO_ALLOWED_HOSTS</code></td>
+                        <td><code>localhost,127.0.0.1,sgo-pji.vercel.app</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Seção 5: Commits -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-code-commit me-2"></i>Commits Realizados</h2>
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Hash</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="commit-hash">9c15aec</span></td>
+                            <td>Configuração inicial settings.py com variáveis de ambiente</td>
+                        </tr>
+                        <tr>
+                            <td><span class="commit-hash">fd42b8a</span></td>
+                            <td>Adição do dj-database-url e python-dotenv</td>
+                        </tr>
+                        <tr>
+                            <td><span class="commit-hash">80cc62d</span></td>
+                            <td>Migração para PostgreSQL/Supabase (v1.1)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="commit-hash">73a05d0</span></td>
+                            <td>Correção de erros de migração</td>
+                        </tr>
+                        <tr>
+                            <td><span class="commit-hash">729b962</span></td>
+                            <td>Atualização de relatórios v1.2</td>
+                        </tr>
+                        <tr>
+                            <td><span class="commit-hash">55aed05</span></td>
+                            <td>Migração para Neon (v1.3)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="commit-hash">dc6e539</span></td>
+                            <td>Correções finais settings.py</td>
+                        </tr>
+                        <tr>
+                            <td><span class="commit-hash">f6a89d0</span></td>
+                            <td>Relatório v1.3 final</td>
+                        </tr>
+                        <tr class="table-success">
+                            <td><span class="commit-hash">[novo]</span></td>
+                            <td><strong>Deploy Vercel 100% operacional (v2.0)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seção 6: Credenciais -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-key me-2"></i>Credenciais de Acesso</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0"><i class="fas fa-sign-in-alt me-2"></i>Login</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>URL:</strong> <a href="https://sgo-pji.vercel.app/login/" target="_blank">https://sgo-pji.vercel.app/login/</a></p>
+                            <p><strong>Usuário:</strong> <code>admin</code></p>
+                            <p><strong>Senha:</strong> <code>admin1234xrl</code></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="fas fa-check-circle me-2"></i>Status dos Testes</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li>✅ Login funcionando</li>
+                                <li>✅ Cadastros testados</li>
+                                <li>✅ PDF gerado com sucesso</li>
+                                <li>✅ Dashboard operacional</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 7: Erros e Soluções -->
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-bug me-2"></i>Erros Encontrados e Soluções</h2>
+            
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Erro</th>
+                        <th>Causa</th>
+                        <th>Solução</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Cannot assign requested address</code></td>
+                        <td>IPv6 no Supabase</td>
+                        <td>Migrou para Neon</td>
+                    </tr>
+                    <tr>
+                        <td><code>Tenant or user not found</code></td>
+                        <td>Pooler Supabase</td>
+                        <td>Usou Pooled connection Neon</td>
+                    </tr>
+                    <tr>
+                        <td><code>password authentication failed</code></td>
+                        <td>Senha expirada</td>
+                        <td>Reset no Neon</td>
+                    </tr>
+                    <tr>
+                        <td><code>relation auth_user does not exist</code></td>
+                        <td>Migrations não rodaram</td>
+                        <td><code>python manage.py migrate</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Usuário ou senha inválidos</code></td>
+                        <td>Senha incorreta</td>
+                        <td><code>user.set_password()</code> no shell</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Conclusão -->
+        <section class="section">
+            <div class="card bg-light border-success">
+                <div class="card-body">
+                    <h2 class="section-title"><i class="fas fa-flag-checkered me-2"></i>Conclusão</h2>
+                    <p>O projeto SGO foi desenvolvido com sucesso, superando diversos desafios técnicos relacionados à migração de banco de dados e deploy em nuvem. A jornada envolveu:</p>
+                    <ol>
+                        <li>Migração de MySQL para PostgreSQL (Supabase → Neon)</li>
+                        <li>Configuração de ambiente de produção com variáveis de ambiente</li>
+                        <li>Deploy em plataforma serverless (Vercel)</li>
+                        <li>Resolução de erros de conexão (IPv6, Pooler, autenticação)</li>
+                        <li>Testes completos de todas as funcionalidades</li>
+                    </ol>
+                    <p class="mb-0"><strong>O sistema está 100% operacional em produção, com todas as funcionalidades testadas e aprovadas.</strong></p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Projeto SGO - PJI310</h5>
+                    <p>Projeto Integrador | Univesp 2026<br>Grupo: GRUPO20</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>
+                        <a href="https://github.com/marco7apolo/PJI310-A2026S1N2-GRUPO20" class="text-white me-3" target="_blank">
+                            <i class="fab fa-github fa-2x"></i>
+                        </a>
+                        <a href="https://sgo-pji.vercel.app/" class="text-white" target="_blank">
+                            <i class="fas fa-external-link-alt fa-2x"></i>
+                        </a>
+                    </p>
+                    <p class="small mb-0">Relatório gerado em: 07 de maio de 2026</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
