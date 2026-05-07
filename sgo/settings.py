@@ -109,19 +109,30 @@ _db_password = os.environ.get('DB_PASSWORD', '')
 _db_host = os.environ.get('DB_HOST', '')
 _db_port = os.environ.get('DB_PORT', '5432')
 
-# Se estiver no Vercel, usa Connection String direta com ANON KEY
-# Formato: postgresql://postgres:[ANON_KEY]@host:port/postgres
+# CONFIGURAÇÃO OBRIGATÓRIA PARA O VERCEL (evita erro IPv6 e Tenant not found)
+# Se estiver no Vercel (variável VERCEL existe), força conexão direta IPv4
 if os.environ.get('VERCEL'):
-    _anon_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1cGFiYXNlOiIsInJlZiI6InN1cGFiYXNlOnJlbDovL3Byb2plY3RzL2V2dW5sdGl0eGZqcnJleW1tYmJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NjYzNTcsImV4cCI6MTkwNDM0MjM1N30.cxGZycRefJS4Fs1okIP9e5x8Iz-yOTsMWwKbsam-EU'
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'postgres',
             'USER': 'postgres',
-            'PASSWORD': _anon_key,
+            'PASSWORD': 'cjNikpPtHCUpNneR',
             'HOST': 'db.evunltitxfjrreymbvbb.supabase.co',
             'PORT': '5432',
         }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': os.environ.get('DB_NAME', 'postgres'),
+            'USER': _db_user,
+            'PASSWORD': _db_password,
+            'HOST': _db_host,
+            'PORT': _db_port,
+        }
+    }
     }
 else:
     DATABASES = {
