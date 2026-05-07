@@ -120,10 +120,6 @@ DATABASES = {
     }
 }
 
-# Log de debug do banco (remover em produção estável)
-import sys
-print(f"[DB DEBUG] Engine={DATABASES['default']['ENGINE']}, User={_db_user}, Host={_db_host}, Port={_db_port}", file=sys.stderr)
-
 
 # Validação de senha
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
