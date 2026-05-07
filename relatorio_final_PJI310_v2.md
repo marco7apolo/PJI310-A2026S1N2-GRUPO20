@@ -65,7 +65,7 @@ O **SGO (Sistema de Gestão de Oficina)** é uma aplicação web desenvolvida em
 
 **String de conexão utilizada:**
 ```
-postgresql://neondb_owner:npg_TInJ1Kwy0GaY@ep-royal-pond-ap7l2s2n-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+postgresql://neondb_owner:PASSWORD_REMOVIDO@ep-royal-pond-ap7l2s2n-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
 ```
 
 ### Fase 4: Configuração Django para Produção
@@ -115,7 +115,7 @@ except ImportError:
 
 3. **Criação do Superuser:**
    - Usuário: `admin`
-   - Senha: `admin1234xrl`
+   - Senha: `SENHA_REMOVIDA`
    - Criado via SQL no Neon e confirmado via Django shell
 
 ---
@@ -151,7 +151,7 @@ python manage.py migrate
 **https://sgo-pji.vercel.app/**
 
 ### Funcionalidades Testadas em Produção
-- ✅ Login com admin/admin1234xrl
+- ✅ Login com admin/SENHA_REMOVIDA
 - ✅ Cadastro de clientes
 - ✅ Cadastro de técnicos
 - ✅ Cadastro de equipamentos
@@ -272,7 +272,7 @@ O sistema está **100% operacional** em produção, com todas as funcionalidades
 ### Credenciais de Acesso
 - **URL:** https://sgo-pji.vercel.app/login/
 - **Usuário:** admin
-- **Senha:** admin1234xrl
+- **Senha:** SENHA_REMOVIDA
 
 ### Repositório
 https://github.com/marco7apolo/PJI310-A2026S1N2-GRUPO20

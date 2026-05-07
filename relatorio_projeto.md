@@ -74,7 +74,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bd_sgo',
         'USER': 'pi_1_26_user',
-        'PASSWORD': 'Pi@1_2026',
+        'PASSWORD': 'PASSWORD_REMOVIDA',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -369,7 +369,7 @@ DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
 DB_ENGINE=django.db.backends.postgresql
 DB_NAME=postgres
 DB_USER=postgres
-DB_PASSWORD=cjNikpPtHCUpNneR
+DB_PASSWORD=PASSWORD_REMOVIDO
 DB_HOST=db.evunltitxfjrreymbvbb.supabase.co
 DB_PORT=5432
 ```
@@ -403,14 +403,14 @@ DB_PORT=5432
 |------|-------|
 | `DATABASE_URL` | (string completa do Neon) |
 | `DJANGO_SETTINGS_MODULE` | `sgo.settings` |
-| `DJANGO_SECRET_KEY` | `django-insecure-^e!pq99yblwp0r9*s=e+g_+72r)-5=dclo2fb5+#3fdudu@ef5` |
+| `DJANGO_SECRET_KEY` | `CHAVE_REMOVIDA` |
 | `DJANGO_DEBUG` | `False` |
 | `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1,sgo-pji.vercel.app` |
 
 ### 12.5 Migrações no Neon
 - **Status:** ✅ Migrações executadas com sucesso (2026-05-07)
 - **Tabelas criadas:** `auth_user`, `django_migrations`, `reparo_cliente`, `reparo_tecnico`, `reparo_equipamento`, `reparo_reparo`
-- **Superusuário:** admin / admin1234xrl (criado via migrações iniciais)
+- **Superusuário:** admin / SENHA_REMOVIDA (criado via migrações iniciais)
 
 ### 12.6 Status do Deploy Neon
 - **URL:** https://sgo-pji.vercel.app
@@ -428,7 +428,7 @@ DB_PORT=5432
 O projeto SGO está **totalmente funcional** com PostgreSQL/Neon e **deployado no Vercel**. Todas as operações CRUD, autenticação, dashboard e geração de PDF foram testadas com sucesso no ambiente de produção.
 
 **URL de Produção:** https://sgo-pji.vercel.app  
-**Login:** admin / admin1234xrl
+**Login:** admin / SENHA_REMOVIDA
 
 **Status Final:** ✅ 100% Operacional (Neon + Vercel)
 
