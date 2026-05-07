@@ -109,6 +109,28 @@ _db_password = os.environ.get('DB_PASSWORD', '')
 _db_host = os.environ.get('DB_HOST', '')
 _db_port = os.environ.get('DB_PORT', '5432')
 
+# FORÇA IPV4 NO VERCEL (evita Cannot assign requested address)
+# Monkey patch no psycopg2 para usar apenas IPv4
+if os.environ.get('VERCEL'):
+    import socket
+    _orig_connect = None
+    try:
+        from psycopg2 import extensions
+        _orig_connect = extensions.connection._connect
+        def _ipv4_only_connect(dsn, connection_factory=None, **kwargs):
+            # Força resolução de nomes para IPv4 apenas
+            if 'host' in kwargs:
+                try:
+                    ai = socket.getaddrinfo(kwargs['host'], kwargs.get('port', 5432), socket.AF_INET, socket.SOCK_STREAM)
+                    if ai:
+                        kwargs['host'] = ai[0][4][0]
+                except Exception:
+                    pass
+            return _orig_connect(dsn, connection_factory=connection_factory, **kwargs) if _orig_connect else None
+        extensions.connection._connect = _ipv4_only_connect
+    except Exception:
+        pass
+
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
