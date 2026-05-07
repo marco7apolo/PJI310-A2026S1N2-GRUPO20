@@ -659,7 +659,7 @@ python manage.py migrate</div>
             </tr>
         </table>
 
-        <h2>11. Atualizações da Versão v1.1 (Migração Concluída)</h2>
+        <h2>11. Atualizações da Versão v1.2 (Deploy Vercel Concluído)</h2>
         
         <h3>11.1 Alterações Realizadas</h3>
         <table>
@@ -668,49 +668,104 @@ python manage.py migrate</div>
                 <th>Alteração</th>
             </tr>
             <tr>
-                <td><code>sgo/settings.py</code></td>
-                <td>Adicionado carregamento automático do <code>.env</code> via <code>python-dotenv</code>; refatorado <code>DATABASES</code> para usar variáveis de ambiente</td>
+                <td><code>requirements.txt</code></td>
+                <td>Removido <code>mysqlclient</code> (projeto usa PostgreSQL/Supabase)</td>
+            </tr>
+            <tr>
+                <td><code>vercel.json</code></td>
+                <td>Removido (Vercel auto-detecta Django)</td>
+            </tr>
+            <tr>
+                <td><code>build.sh</code></td>
+                <td>Removido (não necessário)</td>
+            </tr>
+            <tr>
+                <td><code>.python-version</code></td>
+                <td>Criado com <code>3.12</code> para Vercel</td>
             </tr>
             <tr>
                 <td><code>.env</code></td>
-                <td>Criado com credenciais do Supabase (PostgreSQL) — <strong>não versionado</strong></td>
+                <td>Removido do rastreamento Git (segurança)</td>
             </tr>
             <tr>
-                <td><code>requirements.txt</code></td>
-                <td>Adicionado <code>python-dotenv>=1.0</code>, <code>psycopg2-binary>=2.9</code>; removido MySQL legado</td>
-            </tr>
-            <tr>
-                <td><code>manage.py</code></td>
-                <td>(sem alteração, Django 6.0.5 funcionando)</td>
+                <td><code>sgo/settings.py</code></td>
+                <td>Corrigido <code>ALLOWED_HOSTS</code> para wildcard <code>.vercel.app</code>; removido log de debug</td>
             </tr>
         </table>
 
-        <h3>11.2 Configuração do Supabase</h3>
+        <h3>11.2 Configuração do Vercel</h3>
         <ul>
-            <li><strong>Project ID:</strong> <code>evunltitxfjrreymbvbb</code></li>
-            <li><strong>Região:</strong> <code>sa-east-1</code> (São Paulo)</li>
-            <li><strong>Conexão Direta (localhost):</strong> <code>db.evunltitxfjrreymbvbb.supabase.co:5432</code></li>
-            <li><strong>Transaction Pooler (Vercel):</strong> <code>aws-0-sa-east-1.pooler.supabase.com:6543</code></li>
-            <li><strong>Usuário:</strong> <code>postgres</code></li>
-            <li><strong>Banco:</strong> <code>postgres</code></li>
+            <li><strong>Projeto:</strong> <code>pji-310-a2026-s1-n2-grupo-20</code> (ou <code>sgo-pji</code>)</li>
+            <li><strong>Framework:</strong> Django (auto-detectado)</li>
+            <li><strong>Região:</strong> Washington, D.C., USA (East) – iad1</li>
+            <li><strong>Python Version:</strong> 3.12 (definido em <code>.python-version</code>)</li>
+            <li><strong>URL:</strong> <a href="https://sgo-pji.vercel.app">https://sgo-pji.vercel.app</a></li>
         </ul>
 
-        <h3>11.3 Migrações Executadas com Sucesso</h3>
-        <div class="code-block">Applying contenttypes.0001_initial... OK
-Applying auth.0001_initial... OK
-Applying admin.0001_initial... OK
-(...)
-Applying sgo_app.0001_initial... OK
-Applying sgo_app.0002_cliente_cep... OK</div>
+        <h3>11.3 Variáveis de Ambiente no Vercel (Transaction Pooler)</h3>
+        <table>
+            <tr>
+                <th>Nome</th>
+                <th>Valor</th>
+            </tr>
+            <tr>
+                <td><code>DJANGO_SECRET_KEY</code></td>
+                <td>(chave secreta)</td>
+            </tr>
+            <tr>
+                <td><code>DJANGO_DEBUG</code></td>
+                <td><code>False</code></td>
+            </tr>
+            <tr>
+                <td><code>DB_ENGINE</code></td>
+                <td><code>django.db.backends.postgresql</code></td>
+            </tr>
+            <tr>
+                <td><code>DB_NAME</code></td>
+                <td><code>postgres</code></td>
+            </tr>
+            <tr>
+                <td><code>DB_USER</code></td>
+                <td><code>postgres.evunltitxfjrreymbvbb</code></td>
+            </tr>
+            <tr>
+                <td><code>DB_PASSWORD</code></td>
+                <td>(senha do Supabase)</td>
+            </tr>
+            <tr>
+                <td><code>DB_HOST</code></td>
+                <td><code>aws-0-sa-east-1.pooler.supabase.com</code></td>
+            </tr>
+            <tr>
+                <td><code>DB_PORT</code></td>
+                <td><code>6543</code></td>
+            </tr>
+            <tr>
+                <td><code>DJANGO_ALLOWED_HOSTS</code></td>
+                <td><code>localhost,127.0.0.1,.vercel.app</code></td>
+            </tr>
+            <tr>
+                <td><code>DJANGO_SETTINGS_MODULE</code></td>
+                <td><code>sgo.settings</code></td>
+            </tr>
+        </table>
 
-        <h3>11.4 Testes de Funcionalidade (Localhost)</h3>
+        <h3>11.4 Solução de Problemas (Erro 500)</h3>
+        <div class="info-box">
+            <strong>Erro inicial:</strong> <code>Cannot assign requested address</code> (IPv6)<br>
+            <strong>Causa:</strong> Vercel tentando conexão IPv6 direta com Supabase<br>
+            <strong>Solução:</strong> Migração para <strong>Transaction Pooler</strong> (porta 6543) que resolve para IPv4<br>
+            <strong>Resultado:</strong> ✅ Conexão funcionando
+        </div>
+
+        <h3>11.5 Status do Deploy</h3>
         <table class="status-table">
             <tr>
                 <th>Funcionalidade</th>
                 <th>Status</th>
             </tr>
             <tr>
-                <td>Login/Logout</td>
+                <td>Login/Logout (Superusuário: admin/admin1234xrl)</td>
                 <td class="status-ok">✅ Funcional</td>
             </tr>
             <tr>
@@ -730,7 +785,7 @@ Applying sgo_app.0002_cliente_cep... OK</div>
                 <td class="status-ok">✅ Funcional</td>
             </tr>
             <tr>
-                <td>Dashboard (Gráficos)</td>
+                <td>Dashboard (Gráficos Chart.js)</td>
                 <td class="status-ok">✅ Funcional</td>
             </tr>
             <tr>
@@ -739,39 +794,33 @@ Applying sgo_app.0002_cliente_cep... OK</div>
             </tr>
             <tr>
                 <td>Conexão Supabase (PostgreSQL)</td>
-                <td class="status-ok">✅ Funcional</td>
+                <td class="status-ok">✅ Funcional (Pooler IPv4)</td>
             </tr>
         </table>
 
-        <h3>11.5 Estrutura Final do .env (não versionado)</h3>
-        <div class="code-block"># Django
-DJANGO_SECRET_KEY=...
-DJANGO_DEBUG=True
-DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
-
-# PostgreSQL/Supabase (Conexão Direta - localhost)
-DB_ENGINE=django.db.backends.postgresql
-DB_NAME=postgres
-DB_USER=postgres
-DB_PASSWORD=cjNikpPtHCUpNneR
-DB_HOST=db.evunltitxfjrreymbvbb.supabase.co
-DB_PORT=5432</div>
-
         <h2>12. Considerações Finais</h2>
-        <p>O projeto SGO está <strong>totalmente funcional</strong> com PostgreSQL/Supabase. Todas as operações CRUD, autenticação, dashboard e geração de PDF foram testadas com sucesso no localhost.</p>
+        <p>O projeto SGO está <strong>totalmente funcional</strong> com PostgreSQL/Supabase e <strong>deployado no Vercel</strong>. Todas as operações CRUD, autenticação, dashboard e geração de PDF foram testadas com sucesso no ambiente de produção.</p>
         
-        <h3>Próximos passos:</h3>
+        <h3>Tecnologias Utilizadas:</h3>
+        <ul>
+            <li><strong>Backend:</strong> Django 6.0.5, Python 3.12</li>
+            <li><strong>Banco:</strong> PostgreSQL (Supabase, sa-east-1)</li>
+            <li><strong>Frontend:</strong> HTML5, CSS3, Bootstrap 5, JavaScript (Chart.js)</li>
+            <li><strong>Deploy:</strong> Vercel (Serverless Python)</li>
+            <li><strong>PDF:</strong> ReportLab</li>
+        </ul>
+
+        <h3>Histórico de Versões:</h3>
         <ol>
-            <li>✅ Criar <code>requirements.txt</code> (Concluído)</li>
-            <li>✅ Migrar MySQL → PostgreSQL (Supabase) (Concluído)</li>
-            <li>Configurar deploy no Vercel (usando Pooler: porta 6543)</li>
-            <li>Atualizar relatório pós-deploy (v1.2)</li>
-            <li>✅ Testar funcionamento local com PostgreSQL (Concluído)</li>
+            <li>✅ v1.0: Relatórios iniciais, configuração PostgreSQL via variáveis</li>
+            <li>✅ v1.1: Migração PostgreSQL/Supabase concluída, sistema funcional no localhost</li>
+            <li>✅ v1.2: Deploy no Vercel realizado, sistema online com Pooler (IPv4)</li>
         </ol>
 
         <div class="footer">
-            <p><em>Relatório atualizado em 06/05/2026 — Versão v1.1 (Migração Concluída).</em></p>
+            <p><em>Relatório final atualizado em 07/05/2026 — Versão v1.2 (Deploy Vercel Concluído).</em></p>
             <p>SGO — Sistema de Gestão de Oficina | PJI310-A2026S1N2-GRUPO20</p>
+            <p><strong>URL de Produção:</strong> <a href="https://sgo-pji.vercel.app">https://sgo-pji.vercel.app</a></p>
         </div>
     </div>
 </body>
