@@ -7,13 +7,13 @@ import socket
 # Força uso de IPv4 (desativa IPv6) para evitar "Cannot assign requested address"
 socket.has_ipv6 = False
 
-# String de conexão direta (funcionou localmente, mas via IPv4)
-# Usa o host direto do Supabase (sem Pooler)
+# String de conexão direta (funcionou localmente) - usando IPv4 forçado
+# Formato: postgresql://user:password@host:port/database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER': 'postgres',  # Apenas postgres (sem ref) para direta
+        'USER': 'postgres',
         'PASSWORD': 'cjNikpPtHCUpNneR',
         'HOST': 'db.evunltitxfjrreymbvbb.supabase.co',
         'PORT': '5432',
