@@ -119,17 +119,7 @@ DATABASES = {
         'PORT': _db_port,
     }
 }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
-            'NAME': os.environ.get('DB_NAME', 'postgres'),
-            'USER': _db_user,
-            'PASSWORD': _db_password,
-            'HOST': _db_host,
-            'PORT': _db_port,
-        }
-    }
+
 
 
 # Validação de senha
