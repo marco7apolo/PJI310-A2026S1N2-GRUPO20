@@ -92,10 +92,10 @@ WSGI_APPLICATION = 'sgo.wsgi.application'
 # Variáveis necessárias para PostgreSQL/Supabase:
 #   DB_ENGINE=django.db.backends.postgresql
 #   DB_NAME=nome_do_banco (geralmente "postgres" no Supabase)
-#   DB_USER=usuario (formato: postgres.[project-ref] no Supabase)
+#   DB_USER=postgres (ou postgres.[project-ref] para Pooler)
 #   DB_PASSWORD=senha_forte
-#   DB_HOST=host (ex: aws-0-us-east-1.pooler.supabase.com)
-#   DB_PORT=6543 (porta do Transaction Pooler do Supabase)
+#   DB_HOST=host (ex: db.evunltitxfjrreymbvbb.supabase.co para direta, ou aws-0-sa-east-1.pooler.supabase.com para Pooler)
+#   DB_PORT=5432 (direta) ou 6543 (Pooler)
 # Para MySQL local (desenvolvimento legado):
 #   DB_ENGINE=django.db.backends.mysql
 #   DB_NAME=bd_sgo
@@ -104,16 +104,25 @@ WSGI_APPLICATION = 'sgo.wsgi.application'
 #   DB_HOST=127.0.0.1
 #   DB_PORT=3306
 
+_db_user = os.environ.get('DB_USER', '')
+_db_password = os.environ.get('DB_PASSWORD', '')
+_db_host = os.environ.get('DB_HOST', '')
+_db_port = os.environ.get('DB_PORT', '5432')
+
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
         'NAME': os.environ.get('DB_NAME', 'postgres'),
-        'USER': os.environ.get('DB_USER', ''),
-        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'HOST': os.environ.get('DB_HOST', ''),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'USER': _db_user,
+        'PASSWORD': _db_password,
+        'HOST': _db_host,
+        'PORT': _db_port,
     }
 }
+
+# Log de debug do banco (remover em produção estável)
+import sys
+print(f"[DB DEBUG] Engine={DATABASES['default']['ENGINE']}, User={_db_user}, Host={_db_host}, Port={_db_port}", file=sys.stderr)
 
 
 # Validação de senha
