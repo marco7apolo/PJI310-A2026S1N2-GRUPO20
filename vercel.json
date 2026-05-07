@@ -5,13 +5,8 @@
       "src": "sgo/wsgi.py",
       "use": "@vercel/python",
       "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.14"
+        "maxLambdaSize": "15mb"
       }
-    },
-    {
-      "src": "build.sh",
-      "use": "@vercel/shell"
     }
   ],
   "routes": [
