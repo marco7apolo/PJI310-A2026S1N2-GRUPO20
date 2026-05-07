@@ -109,6 +109,13 @@ _db_password = os.environ.get('DB_PASSWORD', '')
 _db_host = os.environ.get('DB_HOST', '')
 _db_port = os.environ.get('DB_PORT', '5432')
 
+# FORÇA POOLER NO VERCEL (correção erro IPv6)
+# Se estiver rodando no Vercel e as vars não foram atualizadas, usa Pooler automaticamente
+if os.environ.get('VERCEL'):
+    _db_host = 'aws-0-sa-east-1.pooler.supabase.com'
+    _db_port = '6543'
+    _db_user = 'postgres.evunltitxfjrreymbvbb'
+
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
