@@ -1,15 +1,23 @@
 """
-Configurações específicas para o Vercel (PostgreSQL/Supabase via Pooler)
+Configurações específicas para o Vercel (PostgreSQL/Supabase via Conexão Direta IPv4)
 """
 from .settings import *
-import dj_database_url
+import socket
 
-# String de conexão direta para o Pooler (IPv4)
-DATABASE_URL = 'postgresql://postgres.evunltitxfjrreymbvbb:cjNikpPtHCUpNneR@aws-0-sa-east-1.pooler.supabase.com:6543/postgres'
+# Força uso de IPv4 (desativa IPv6) para evitar "Cannot assign requested address"
+socket.has_ipv6 = False
 
-# Configura o banco via dj-database-url
+# String de conexão direta (funcionou localmente, mas via IPv4)
+# Usa o host direto do Supabase (sem Pooler)
 DATABASES = {
-    'default': dj_database_url.config(default=DATABASE_URL)
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',  # Apenas postgres (sem ref) para direta
+        'PASSWORD': 'cjNikpPtHCUpNneR',
+        'HOST': 'db.evunltitxfjrreymbvbb.supabase.co',
+        'PORT': '5432',
+    }
 }
 
 # Debug desligado no Vercel
