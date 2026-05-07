@@ -424,6 +424,27 @@ DB_PORT=5432
   - ✅ Dashboard com Gráficos (Chart.js)
   - ✅ Laudo em PDF (ReportLab)
 
+## 12.1 Atualizações da Versão v1.2.1 (Correção Final Vercel)
+
+### 12.1.1 Problemas Encontrados no Deploy
+| Tentativa | Erro | Solução Aplicada |
+|-----------|------|-------------------|
+| Conexão Direta (IPv6) | `Cannot assign requested address` | Migração para Pooler (IPv4) |
+| Pooler (postgres.ref) | `Tenant or user not found` | Uso de `dj-database-url` com string completa |
+| Variáveis Vercel | Falha ao ler settings | Criação de `settings_vercel.py` dedicado |
+
+### 12.1.2 Alterações Realizadas
+| Arquivo | Alteração |
+|---------|-----------|
+| `sgo/settings_vercel.py` | Criado com configuração hard-coded do Pooler |
+| `requirements.txt` | Adicionado `dj-database-url>=2.0` |
+| `sgo/settings.py` | Força Pooler se `VERCEL` existir no ambiente |
+
+### 12.1.3 Configuração Final no Vercel
+- **DJANGO_SETTINGS_MODULE:** `sgo.settings_vercel`
+- **DATABASE_URL:** `postgresql://postgres.evunltitxfjrreymbvbb:cjNikpPtHCUpNneR@aws-0-sa-east-1.pooler.supabase.com:6543/postgres`
+- **Uso de `dj-database-url`** para parsing da string
+
 ## 13. Considerações Finais
 
 O projeto SGO está **totalmente funcional** com PostgreSQL/Supabase e **deployado no Vercel**. Todas as operações CRUD, autenticação, dashboard e geração de PDF foram testadas com sucesso no ambiente de produção.
