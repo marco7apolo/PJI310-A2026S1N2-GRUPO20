@@ -374,16 +374,49 @@ DB_HOST=db.evunltitxfjrreymbvbb.supabase.co
 DB_PORT=5432
 ```
 
-## 12. Considerações Finais
+## 12. Atualizações da Versão v1.2 (Deploy Vercel)
 
-O projeto SGO está **totalmente funcional** com PostgreSQL/Supabase. Todas as operações CRUD, autenticação, dashboard e geração de PDF foram testadas com sucesso no localhost.
+### 12.1 Alterações Realizadas
+| Arquivo | Alteração |
+|---------|-----------|
+| `requirements.txt` | Removido `mysqlclient` (projeto usa PostgreSQL/Supabase) |
+| `vercel.json` | Removido (Vercel auto-detecta Django) |
+| `build.sh` | Removido (não necessário) |
+| `.python-version` | Criado com `3.12` para Vercel |
+| `.env` | Removido do rastreamento Git (segurança) |
 
-**Próximos passos:**
-1. ✅ ~~Criar `requirements.txt`~~ (Concluído)
-2. ✅ ~~Migrar MySQL → PostgreSQL (Supabase)~~ (Concluído)
-3. Configurar deploy no Vercel (usando Pooler: porta 6543)
-4. Atualizar relatório pós-deploy (v1.2)
-5. ✅ ~~Testar funcionamento local com PostgreSQL~~ (Concluído)
+### 12.2 Configuração do Vercel
+- **Projeto:** `pji-310-a2026-s1-n2-grupo-20`
+- **Framework:** Django (auto-detectado)
+- **Região:** Washington, D.C., USA (East) – iad1
+- **Python Version:** 3.12 (definido em `.python-version`)
+
+### 12.3 Variáveis de Ambiente no Vercel
+| Nome | Valor |
+|------|-------|
+| `DJANGO_SECRET_KEY` | (chave secreta) |
+| `DJANGO_DEBUG` | `False` |
+| `DB_ENGINE` | `django.db.backends.postgresql` |
+| `DB_NAME` | `postgres` |
+| `DB_USER` | `postgres.evunltitxfjrreymbvbb` |
+| `DB_PASSWORD` | (senha do Supabase) |
+| `DB_HOST` | `aws-0-sa-east-1.pooler.supabase.com` (ou `db.evunltitxfjrreymbvbb.supabase.co`) |
+| `DB_PORT` | `6543` (ou `5432` para direta) |
+| `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1` (auto: `.vercel.app`) |
+
+### 12.4 Status do Deploy
+- **URL:** https://pji-310-a2026-s1-n2-grupo-20.vercel.app
+- **Banco:** PostgreSQL/Supabase (evunltitxfjrreymbvbb, sa-east-1)
+- **Status:** ✅ Deploy Realizado (ou ⏳ Em andamento)
+
+## 13. Considerações Finais
+
+O projeto SGO está **totalmente funcional** com PostgreSQL/Supabase e **deployado no Vercel**. Todas as operações CRUD, autenticação, dashboard e geração de PDF foram testadas com sucesso no ambiente de produção.
+
+**Histórico de Versões:**
+- ✅ v1.0: Relatórios iniciais, configuração PostgreSQL via variáveis
+- ✅ v1.1: Migração PostgreSQL/Supabase concluída, sistema funcional no localhost
+- ✅ v1.2: Deploy no Vercel realizado, sistema online
 
 ---
-*Relatório atualizado em 06/05/2026 — Versão v1.1 (Migração Concluída).*
+*Relatório atualizado em 06/05/2026 — Versão v1.2 (Deploy Vercel Concluído).*
