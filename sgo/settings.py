@@ -1,48 +1,30 @@
 """
 Configurações do Django para o projeto SGO.
-
-Gerado por `django-admin startproject` com Django 5.2.
-
-Documentação: https://docs.djangoproject.com/en/5.2/topics/settings/
-Referência completa: https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
 import os
 from pathlib import Path
 
-# Caminhos: use BASE_DIR / 'subpasta'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Carrega variáveis de ambiente do arquivo .env (se existir e python-dotenv instalado)
+# Carrega .env localmente se existir
 try:
     from dotenv import load_dotenv
     load_dotenv(BASE_DIR / '.env')
 except ImportError:
-    # python-dotenv não instalado; depende de variáveis de ambiente do sistema
     pass
 
-
-# Ajustes rápidos para desenvolvimento — não use em produção sem revisão.
-# Lista de verificação: https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# ATENÇÃO: em produção, use uma chave secreta forte e armazenada com segurança.
+# Chave secreta
 SECRET_KEY = os.environ.get(
     'DJANGO_SECRET_KEY',
     'django-insecure-^e!pq99yblwp0r9*s=e+g_+72r)-5=dclo2fb5+#3fdudu@ef5',
 )
 
-# ATENÇÃO: desative DEBUG em produção.
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('1', 'true', 'yes')
 
-# ALLOWED_HOSTS: aceita domínios do Vercel (.vercel.app) além dos configurados
-_allowed_env = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
-ALLOWED_HOSTS = [h.strip() for h in _allowed_env.split(',') if h.strip()]
-# Adiciona padrão do Vercel (wildcard) se não estiver presente
+_allowed = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
+ALLOWED_HOSTS = [h.strip() for h in _allowed.split(',') if h.strip()]
 if not any('vercel.app' in h for h in ALLOWED_HOSTS):
     ALLOWED_HOSTS.append('.vercel.app')
-
-
-# Aplicações instaladas e middleware
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -51,7 +33,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'sgo_app.apps.RepairsConfig',
     'sgo_app',
 ]
 
@@ -84,100 +65,42 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sgo.wsgi.application'
 
-
-# Banco de dados
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-# Configuração via variáveis de ambiente (suporte a PostgreSQL/Supabase e MySQL)
-# Variáveis necessárias para PostgreSQL/Supabase:
-#   DB_ENGINE=django.db.backends.postgresql
-#   DB_NAME=nome_do_banco (geralmente "postgres" no Supabase)
-#   DB_USER=postgres (ou postgres.[project-ref] para Pooler)
-#   DB_PASSWORD=senha_forte
-#   DB_HOST=host (ex: db.evunltitxfjrreymbvbb.supabase.co para direta, ou aws-0-sa-east-1.pooler.supabase.com para Pooler)
-#   DB_PORT=5432 (direta) ou 6543 (Pooler)
-# Para MySQL local (desenvolvimento legado):
-#   DB_ENGINE=django.db.backends.mysql
-#   DB_NAME=bd_sgo
-#   DB_USER=pi_1_26_user
-#   DB_PASSWORD=Pi@1_2026
-#   DB_HOST=127.0.0.1
-#   DB_PORT=3306
-
-_db_user = os.environ.get('DB_USER', '')
-_db_password = os.environ.get('DB_PASSWORD', '')
-_db_host = os.environ.get('DB_HOST', '')
-_db_port = os.environ.get('DB_PORT', '5432')
-
-# FORÇA IPV4 NO VERCEL (evita Cannot assign requested address)
-# Monkey patch no psycopg2 para usar apenas IPv4
-if os.environ.get('VERCEL'):
-    import socket
-    _orig_connect = None
-    try:
-        from psycopg2 import extensions
-        _orig_connect = extensions.connection._connect
-        def _ipv4_only_connect(dsn, connection_factory=None, **kwargs):
-            # Força resolução de nomes para IPv4 apenas
-            if 'host' in kwargs:
-                try:
-                    ai = socket.getaddrinfo(kwargs['host'], kwargs.get('port', 5432), socket.AF_INET, socket.SOCK_STREAM)
-                    if ai:
-                        kwargs['host'] = ai[0][4][0]
-                except Exception:
-                    pass
-            return _orig_connect(dsn, connection_factory=connection_factory, **kwargs) if _orig_connect else None
-        extensions.connection._connect = _ipv4_only_connect
-    except Exception:
-        pass
-
-DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('DB_NAME', 'postgres'),
-        'USER': _db_user,
-        'PASSWORD': _db_password,
-        'HOST': _db_host,
-        'PORT': _db_port,
+# Banco de dados - usa dj-database-url se disponível
+try:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600
+        )
     }
-}
-
-
-
-# Validação de senha
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+except ImportError:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': os.environ.get('DB_NAME', 'postgres'),
+            'USER': os.environ.get('DB_USER', 'postgres'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+            'HOST': os.environ.get('DB_HOST', 'localhost'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# Idioma e fuso horário (Brasil)
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-# Arquivos estáticos (CSS, JavaScript, imagens)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
 STATIC_URL = 'static/'
-
-# Tipo padrão de chave primária
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'  # Para onde o usuário vai após logar
-LOGOUT_REDIRECT_URL = 'login' # Para onde vai após deslogar
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
