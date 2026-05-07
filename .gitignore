@@ -1,0 +1,29 @@
+# Django
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+
+# Banco de dados
+*.sqlite3
+db.sqlite3
+
+# Arquivos de ambiente virtual
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db

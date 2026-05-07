@@ -13,6 +13,14 @@ from pathlib import Path
 # Caminhos: use BASE_DIR / 'subpasta'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Carrega variáveis de ambiente do arquivo .env (se existir e python-dotenv instalado)
+try:
+    from dotenv import load_dotenv
+    load_dotenv(BASE_DIR / '.env')
+except ImportError:
+    # python-dotenv não instalado; depende de variáveis de ambiente do sistema
+    pass
+
 
 # Ajustes rápidos para desenvolvimento — não use em produção sem revisão.
 # Lista de verificação: https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/

@@ -49,14 +49,15 @@
         }
         
         header .version {
-            background: #EFF6FF;
-            color: #1E3A8A;
+            background: #D1FAE5;
+            color: #065F46;
             padding: 4px 12px;
             border-radius: 12px;
             font-size: 10pt;
             font-weight: 600;
             display: inline-block;
             margin-bottom: 10px;
+            border: 1px solid #34D399;
         }
         
         header .meta {
@@ -229,14 +230,15 @@
     
     <div class="container">
     <header>
-        <div class="version">v1.0 — MySQL → PostgreSQL/Supabase</div>
+        <div class="version">v1.1 — Migração PostgreSQL/Supabase Concluída ✅</div>
         <h1>SGO — Sistema de Gestão de Oficina</h1>
         <div class="subtitle">Relatório Detalhado do Projeto</div>
         <div class="meta">
             <strong>Data:</strong> 06 de maio de 2026<br>
             <strong>Projeto:</strong> PJI310-A2026S1N2-GRUPO20<br>
-            <strong>Repositório:</strong> https://github.com/anomalyco/PJI310-A2026S1N2-GRUPO20<br>
-            <strong>Tecnologias:</strong> Django 5.2, Python, MySQL/PostgreSQL, HTML/CSS, JavaScript, Bootstrap 5
+            <strong>Repositório:</strong> https://github.com/marco7apolo/PJI310-A2026S1N2-GRUPO20<br>
+            <strong>Tecnologias:</strong> Django 6.0.5, Python 3.14, PostgreSQL/Supabase, HTML/CSS, JavaScript, Bootstrap 5<br>
+            <strong>Status:</strong> ✅ Totalmente Funcional (Cadastros, Dashboard, PDF, Autenticação)
         </div>
     </header>
 
@@ -657,20 +659,118 @@ python manage.py migrate</div>
             </tr>
         </table>
 
-        <h2>11. Considerações Finais</h2>
-        <p>O projeto SGO está bem estruturado, seguindo as boas práticas do Django. A interface é limpa, responsiva e utiliza Bootstrap 5. O sistema atende ao propósito de gestão de oficinas de reparo, com potencial para expansão.</p>
+        <h2>11. Atualizações da Versão v1.1 (Migração Concluída)</h2>
+        
+        <h3>11.1 Alterações Realizadas</h3>
+        <table>
+            <tr>
+                <th>Arquivo</th>
+                <th>Alteração</th>
+            </tr>
+            <tr>
+                <td><code>sgo/settings.py</code></td>
+                <td>Adicionado carregamento automático do <code>.env</code> via <code>python-dotenv</code>; refatorado <code>DATABASES</code> para usar variáveis de ambiente</td>
+            </tr>
+            <tr>
+                <td><code>.env</code></td>
+                <td>Criado com credenciais do Supabase (PostgreSQL) — <strong>não versionado</strong></td>
+            </tr>
+            <tr>
+                <td><code>requirements.txt</code></td>
+                <td>Adicionado <code>python-dotenv>=1.0</code>, <code>psycopg2-binary>=2.9</code>; removido MySQL legado</td>
+            </tr>
+            <tr>
+                <td><code>manage.py</code></td>
+                <td>(sem alteração, Django 6.0.5 funcionando)</td>
+            </tr>
+        </table>
+
+        <h3>11.2 Configuração do Supabase</h3>
+        <ul>
+            <li><strong>Project ID:</strong> <code>evunltitxfjrreymbvbb</code></li>
+            <li><strong>Região:</strong> <code>sa-east-1</code> (São Paulo)</li>
+            <li><strong>Conexão Direta (localhost):</strong> <code>db.evunltitxfjrreymbvbb.supabase.co:5432</code></li>
+            <li><strong>Transaction Pooler (Vercel):</strong> <code>aws-0-sa-east-1.pooler.supabase.com:6543</code></li>
+            <li><strong>Usuário:</strong> <code>postgres</code></li>
+            <li><strong>Banco:</strong> <code>postgres</code></li>
+        </ul>
+
+        <h3>11.3 Migrações Executadas com Sucesso</h3>
+        <div class="code-block">Applying contenttypes.0001_initial... OK
+Applying auth.0001_initial... OK
+Applying admin.0001_initial... OK
+(...)
+Applying sgo_app.0001_initial... OK
+Applying sgo_app.0002_cliente_cep... OK</div>
+
+        <h3>11.4 Testes de Funcionalidade (Localhost)</h3>
+        <table class="status-table">
+            <tr>
+                <th>Funcionalidade</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>Login/Logout</td>
+                <td class="status-ok">✅ Funcional</td>
+            </tr>
+            <tr>
+                <td>Cadastro de Clientes</td>
+                <td class="status-ok">✅ Funcional</td>
+            </tr>
+            <tr>
+                <td>Cadastro de Técnicos</td>
+                <td class="status-ok">✅ Funcional</td>
+            </tr>
+            <tr>
+                <td>Cadastro de Equipamentos</td>
+                <td class="status-ok">✅ Funcional</td>
+            </tr>
+            <tr>
+                <td>Ordens de Serviço (Reparos)</td>
+                <td class="status-ok">✅ Funcional</td>
+            </tr>
+            <tr>
+                <td>Dashboard (Gráficos)</td>
+                <td class="status-ok">✅ Funcional</td>
+            </tr>
+            <tr>
+                <td>Laudo em PDF (ReportLab)</td>
+                <td class="status-ok">✅ Funcional</td>
+            </tr>
+            <tr>
+                <td>Conexão Supabase (PostgreSQL)</td>
+                <td class="status-ok">✅ Funcional</td>
+            </tr>
+        </table>
+
+        <h3>11.5 Estrutura Final do .env (não versionado)</h3>
+        <div class="code-block"># Django
+DJANGO_SECRET_KEY=...
+DJANGO_DEBUG=True
+DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
+
+# PostgreSQL/Supabase (Conexão Direta - localhost)
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=postgres
+DB_USER=postgres
+DB_PASSWORD=cjNikpPtHCUpNneR
+DB_HOST=db.evunltitxfjrreymbvbb.supabase.co
+DB_PORT=5432</div>
+
+        <h2>12. Considerações Finais</h2>
+        <p>O projeto SGO está <strong>totalmente funcional</strong> com PostgreSQL/Supabase. Todas as operações CRUD, autenticação, dashboard e geração de PDF foram testadas com sucesso no localhost.</p>
         
         <h3>Próximos passos:</h3>
         <ol>
-            <li>Criar <code>requirements.txt</code></li>
-            <li>Migrar MySQL → PostgreSQL (Supabase)</li>
-            <li>Configurar deploy no Vercel</li>
-            <li>Atualizar relatório pós-migração</li>
-            <li>Testar funcionamento local com PostgreSQL</li>
+            <li>✅ Criar <code>requirements.txt</code> (Concluído)</li>
+            <li>✅ Migrar MySQL → PostgreSQL (Supabase) (Concluído)</li>
+            <li>Configurar deploy no Vercel (usando Pooler: porta 6543)</li>
+            <li>Atualizar relatório pós-deploy (v1.2)</li>
+            <li>✅ Testar funcionamento local com PostgreSQL (Concluído)</li>
         </ol>
 
         <div class="footer">
-            <p><em>Relatório gerado automaticamente em 06/05/2026</em></p>
+            <p><em>Relatório atualizado em 06/05/2026 — Versão v1.1 (Migração Concluída).</em></p>
             <p>SGO — Sistema de Gestão de Oficina | PJI310-A2026S1N2-GRUPO20</p>
         </div>
     </div>
