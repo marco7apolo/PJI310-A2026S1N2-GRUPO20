@@ -407,12 +407,16 @@ DB_PORT=5432
 | `DJANGO_DEBUG` | `False` |
 | `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1,sgo-pji.vercel.app` |
 
-### 12.5 Status do Deploy Neon
+### 12.5 Migrações no Neon
+- **Status:** ✅ Migrações executadas com sucesso (2026-05-07)
+- **Tabelas criadas:** `auth_user`, `django_migrations`, `reparo_cliente`, `reparo_tecnico`, `reparo_equipamento`, `reparo_reparo`
+- **Superusuário:** admin / admin1234xrl (criado via migrações iniciais)
+
+### 12.6 Status do Deploy Neon
 - **URL:** https://sgo-pji.vercel.app
 - **Banco:** PostgreSQL/Neon (ep-royal-pond-ap7l2s2n, US East 1)
-- **Status:** ✅ Deploy Realizado com Neon
-- **Superusuário:** admin / admin1234xrl
-- **Funcionalidades testadas:**
+- **Status:** ⏳ Aguardando reset de senha no Neon
+- **Funcionalidades testadas (localhost):**
   - ✅ Login/Logout
   - ✅ Cadastros (Clientes, Técnicos, Equipamentos)
   - ✅ Ordens de Serviço (Reparos)
