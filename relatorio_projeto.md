@@ -374,76 +374,32 @@ DB_HOST=db.evunltitxfjrreymbvbb.supabase.co
 DB_PORT=5432
 ```
 
-## 12. Atualizações da Versão v1.2 (Deploy Vercel Concluído)
+## 12. Atualizações da Versão v1.3 (Migração para Neon)
 
-### 12.1 Alterações Realizadas
-| Arquivo | Alteração |
-|---------|-----------|
-| `requirements.txt` | Removido `mysqlclient` (projeto usa PostgreSQL/Supabase) |
-| `vercel.json` | Removido (Vercel auto-detecta Django) |
-| `build.sh` | Removido (não necessário) |
-| `.python-version` | Criado com `3.12` para Vercel |
-| `.env` | Removido do rastreamento Git (segurança) |
-| `sgo/settings.py` | Corrigido `ALLOWED_HOSTS` para wildcard `.vercel.app`; removido log de debug |
-
-### 12.2 Configuração do Vercel
-- **Projeto:** `pji-310-a2026-s1-n2-grupo-20` (ou `sgo-pji`)
-- **Framework:** Django (auto-detectado)
-- **Região:** Washington, D.C., USA (East) – iad1
-- **Python Version:** 3.12 (definido em `.python-version`)
-- **URL:** https://sgo-pji.vercel.app
-
-### 12.3 Variáveis de Ambiente no Vercel (Transaction Pooler)
-| Nome | Valor |
-|------|-------|
-| `DJANGO_SECRET_KEY` | (chave secreta) |
-| `DJANGO_DEBUG` | `False` |
-| `DB_ENGINE` | `django.db.backends.postgresql` |
-| `DB_NAME` | `postgres` |
-| `DB_USER` | `postgres.evunltitxfjrreymbvbb` |
-| `DB_PASSWORD` | `cjNikpPtHCUpNneR` |
-| `DB_HOST` | `aws-0-sa-east-1.pooler.supabase.com` |
-| `DB_PORT` | `6543` |
-| `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1,.vercel.app` |
-| `DJANGO_SETTINGS_MODULE` | `sgo.settings` |
-
-### 12.4 Solução de Problemas (Erro 500)
-- **Erro inicial:** `Cannot assign requested address` (IPv6)
-- **Causa:** Vercel tentando conexão IPv6 direta com Supabase
-- **Solução:** Migração para **Transaction Pooler** (porta 6543) que resolve para IPv4
-- **Resultado:** ✅ Conexão funcionando
-
-### 12.5 Status do Deploy
-- **URL:** https://sgo-pji.vercel.app
-- **Banco:** PostgreSQL/Supabase (evunltitxfjrreymbvbb, sa-east-1)
-- **Status:** ✅ Deploy Realizado (Superusuário: admin / admin1234xrl)
-- **Funcionalidades testadas:**
-  - ✅ Login/Logout
-  - ✅ Cadastros (Clientes, Técnicos, Equipamentos)
-  - ✅ Ordens de Serviço (Reparos)
-  - ✅ Dashboard com Gráficos (Chart.js)
-  - ✅ Laudo em PDF (ReportLab)
-
-## 12.1 Atualizações da Versão v1.2.1 (Correção Final Vercel)
-
-### 12.1.1 Problemas Encontrados no Deploy
+### 12.1 Problemas no Supabase
 | Tentativa | Erro | Solução Aplicada |
 |-----------|------|-------------------|
 | Conexão Direta (IPv6) | `Cannot assign requested address` | Migração para Pooler (IPv4) |
-| Pooler (postgres.ref) | `Tenant or user not found` | Uso de `dj-database-url` com string completa |
-| Variáveis Vercel | Falha ao ler settings | Criação de `settings_vercel.py` dedicado |
+| Pooler (postgres.ref) | `Tenant or user not found` | Uso de `dj-database-url` |
+| IPv4 Forçado | Persistiu | **Migração para Neon** |
 
-### 12.1.2 Alterações Realizadas
+### 12.2 Alterações Realizadas
 | Arquivo | Alteração |
 |---------|-----------|
-| `sgo/settings_vercel.py` | Criado com configuração hard-coded do Pooler |
-| `requirements.txt` | Adicionado `dj-database-url>=2.0` |
-| `sgo/settings.py` | Força Pooler se `VERCEL` existir no ambiente |
+| `sgo/settings.py` | Reescrito limpo com `dj-database-url` e suporte Neon |
+| `requirements.txt` | Mantido `dj-database-url>=2.0` |
+| `settings_vercel.py` | Removido (não usado) |
 
-### 12.1.3 Configuração Final no Vercel
-- **DJANGO_SETTINGS_MODULE:** `sgo.settings_vercel`
-- **DATABASE_URL:** `postgresql://postgres.evunltitxfjrreymbvbb:cjNikpPtHCUpNneR@aws-0-sa-east-1.pooler.supabase.com:6543/postgres`
-- **Uso de `dj-database-url`** para parsing da string
+### 12.3 Configuração no Neon
+- **Projeto:** `sgo-oficina` (ou similar)
+- **Região:** `São Paulo (sa-east-1)` ou `US East`
+- **String:** `postgresql://user:password@ep-xxx.region.neon.tech/neondb`
+
+### 12.4 Variáveis no Vercel (Neon)
+| Nome | Valor |
+|------|-------|
+| `DATABASE_URL` | (string completa do Neon) |
+| `DJANGO_SETTINGS_MODULE` | `sgo.settings` |
 
 ## 13. Considerações Finais
 
